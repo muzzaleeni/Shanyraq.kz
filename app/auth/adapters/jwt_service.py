@@ -1,5 +1,4 @@
 from datetime import datetime, timedelta
-from typing import Optional
 
 from jose import JWTError, jwt
 from pydantic import BaseModel, Field
@@ -33,12 +32,13 @@ class JwtService:
 
         return jwt.encode(jwt_data, self.secret, algorithm=self.algorithm)
 
-    def parse_jwt_user_data(self, token: str) -> Optional[JWTData]:
+    def parse_jwt_user_data(self, token: str) -> JWTData | None:
         if not token:
             return None
 
         try:
-            payload = jwt.decode(token, self.secret, algorithms=[self.algorithm])
+            payload = jwt.decode(token, self.secret,
+                                 algorithms=[self.algorithm])
         except JWTError:
             raise InvalidToken()
 
