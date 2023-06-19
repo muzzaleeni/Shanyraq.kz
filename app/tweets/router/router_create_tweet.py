@@ -31,7 +31,7 @@ s3 = boto3.client(
 bucket_name = os.getenv('AWS_S3_BUCKET_NAME')
 
 
-@router.post("/shanyraks/", response_model=CreateTweetResponse)
+@router.post("/", response_model=CreateTweetResponse)
 def create_tweet(
         tweet_data: CreateTweetRequest,
         jwt_data: JWTData = Depends(parse_jwt_user_data),
@@ -49,7 +49,7 @@ def create_tweet(
     return CreateTweetResponse(id=tweet_id)
 
 
-@router.post("/shanyraks/{id}/media", status_code=200)
+@router.post("/{id}/media", status_code=200)
 def upload_tweet_media(
         id: str,
         images: List[UploadFile] = File(...)

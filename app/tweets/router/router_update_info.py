@@ -17,7 +17,7 @@ class UpdateTweetRequest(AppModel):
     description: str
 
 
-@router.patch("/shanyraks/{tweet_id}")
+@router.patch("/{tweet_id}")
 def update_tweet(
     tweet_id: str,
     updated_data: UpdateTweetRequest,

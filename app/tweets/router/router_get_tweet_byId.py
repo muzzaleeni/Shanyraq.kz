@@ -15,7 +15,7 @@ class GetTweetResponse(BaseModel):
     user_id: str
 
 
-@router.get("/shanyraks/{id}", response_model=GetTweetResponse)
+@router.get("/{id}", response_model=GetTweetResponse)
 def get_tweet(
     id: str,
     svc: Service = Depends(get_service)
