@@ -21,5 +21,5 @@ app.add_middleware(
     allow_credentials=True,
 )
 
-app.include_router(auth_router, prefix="/auth", tags=["Auth"])
+app.include_router(auth_router, prefix="/auth", tags=["Users"])
 app.include_router(tweets_router, prefix="/tweets", tags=["Tweets"])

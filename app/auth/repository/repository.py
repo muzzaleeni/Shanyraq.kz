@@ -15,6 +15,9 @@ class AuthRepository:
             "email": user["email"],
             "password": hash_password(user["password"]),
             "created_at": datetime.utcnow(),
+            "name": "NA",
+            "phone": "NA",
+            "city": "NA",
         }
 
         self.database["users"].insert_one(payload)
