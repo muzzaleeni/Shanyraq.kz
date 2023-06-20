@@ -3,6 +3,8 @@ from typing import List
 
 from bson.objectid import ObjectId
 from pymongo.database import Database
+import uuid
+
 
 
 class TweetRepository:
@@ -51,3 +53,22 @@ class TweetRepository:
             result.append(tweet)
 
         return result
+
+    def add_comment_to_tweet(self, tweet_id: str, user_id: str, comment_text: str) -> str:
+        comment_id = str(uuid.uuid4())  # Generate a unique ID for the comment
+
+        comment = {
+            "_id": comment_id,
+            "user_id": user_id,
+            "text": comment_text,
+        }
+
+        result = self.database["tweets"].update_one(
+            {"_id": ObjectId(tweet_id)},
+            {"$push": {"comments": comment}}
+        )
+
+        if result.modified_count > 0:
+            return comment_id
+
+        return ""

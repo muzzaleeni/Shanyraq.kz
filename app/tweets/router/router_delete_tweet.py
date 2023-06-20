@@ -9,6 +9,7 @@ class DeleteTweetResponse(AppModel):
     message: str
 
 
+
 @router.delete("/{id}", response_model=DeleteTweetResponse)
 def delete_tweet(
     id: str,
