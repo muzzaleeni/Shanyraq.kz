@@ -40,10 +40,10 @@ class TweetRepository:
             {"_id": ObjectId(tweet_id)})
         return result.deleted_count > 0
 
-    def get_tweet_by_user_id(self, user_id: str) -> List[dict]:
+    def get_tweets_by_user_id(self, user_id: str) -> List:
         tweets = self.database["tweets"].find(
             {
-                "created_by": ObjectId(user_id),
+                "created_by": user_id,
             }
         )
         result = []
