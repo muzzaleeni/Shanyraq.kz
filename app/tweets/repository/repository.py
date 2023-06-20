@@ -77,3 +77,19 @@ class TweetRepository:
         if tweet and "comments" in tweet:
             return tweet["comments"]
         return []
+
+    def get_comment_by_id(self, tweet_id: str, comment_id: str) -> dict:
+        tweet = self.database["tweets"].find_one(
+            {"_id": ObjectId(tweet_id)},
+            {"comments": {"$elemMatch": {"_id": comment_id}}}
+        )
+        if tweet and "comments" in tweet:
+            return tweet["comments"][0]
+        return {}
+
+    def update_comment(self, tweet_id: str, comment_id: str, updated_data: dict) -> bool:
+        result = self.database["tweets"].update_one(
+            {"_id": ObjectId(tweet_id), "comments._id": comment_id},
+            {"$set": {"comments.$.text": updated_data.get("text")}}
+        )
+        return result.modified_count > 0
