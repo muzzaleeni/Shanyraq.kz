@@ -6,7 +6,6 @@ from pymongo.database import Database
 import uuid
 
 
-
 class TweetRepository:
     def __init__(self, database: Database):
         self.database = database
@@ -72,3 +71,9 @@ class TweetRepository:
             return comment_id
 
         return ""
+
+    def get_tweet_comments(self, tweet_id: str) -> List:
+        tweet = self.database["tweets"].find_one({"_id": ObjectId(tweet_id)})
+        if tweet and "comments" in tweet:
+            return tweet["comments"]
+        return []
