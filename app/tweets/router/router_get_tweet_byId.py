@@ -21,7 +21,7 @@ def get_tweet(
     svc: Service = Depends(get_service)
 ) -> GetTweetResponse:
     # Retrieve the tweet from the service or repository
-    tweet = svc.repository.get_tweet_by_id(id)
+    tweet = svc.repository.get_tweet_by_tweet_id(id)
 
     if not tweet:
         raise HTTPException(status_code=404, detail="Tweet not found")
@@ -35,5 +35,5 @@ def get_tweet(
         area=tweet["area"],
         rooms_count=tweet["rooms_count"],
         description=tweet["description"],
-        user_id=str(tweet.get("user_id", "")),
+        user_id=tweet["created_by"],
     )
