@@ -19,7 +19,7 @@ class CreateTweetRequest(BaseModel):
 
 
 class CreateTweetResponse(BaseModel):
-    id: str
+    tweet_id: str
 
 
 # Configure AWS S3 client
@@ -40,13 +40,13 @@ def create_tweet(
     # Extract the user ID from the JWT data
     user_id = jwt_data.user_id
     # Create a new ad with the provided data
-    tweet_id = svc.repository.create_tweet(tweet_data.dict())
+    temp_tweet_id: str = svc.repository.create_tweet(user_id, tweet_data.dict())
 
-    if not tweet_id:
-        raise HTTPException(status_code=500, detail="Failed to create ad")
+    if not temp_tweet_id:
+        raise HTTPException(status_code=500, detail="Failed to create tweet")
 
     # Return the ID of the created ad
-    return CreateTweetResponse(id=tweet_id)
+    return CreateTweetResponse(tweet_id=temp_tweet_id)
 
 
 @router.post("/{id}/media", status_code=200)
