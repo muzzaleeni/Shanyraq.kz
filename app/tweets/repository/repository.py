@@ -93,3 +93,10 @@ class TweetRepository:
             {"$set": {"comments.$.text": updated_data.get("text")}}
         )
         return result.modified_count > 0
+
+    def delete_comment(self, tweet_id: str, comment_id: str) -> bool:
+        result = self.database["tweets"].update_one(
+            {"_id": ObjectId(tweet_id)},
+            {"$pull": {"comments": {"_id": comment_id}}}
+        )
+        return result.modified_count > 0
