@@ -3,7 +3,8 @@ from starlette.middleware.cors import CORSMiddleware
 
 from app.auth.router.users import router as auth_router
 from app.config import client, env, fastapi_config
-from app.tweets.router import router as tweets_router
+from app.tweets.router.tweets import router as tweets_router
+from app.tweets.router.comments import router as comments_router
 
 app = FastAPI(**fastapi_config)
 
@@ -23,3 +24,4 @@ app.add_middleware(
 
 app.include_router(auth_router, prefix="/auth", tags=["Users"])
 app.include_router(tweets_router, prefix="/tweets", tags=["Tweets"])
+app.include_router(comments_router, prefix="/tweets", tags=["Comments"])

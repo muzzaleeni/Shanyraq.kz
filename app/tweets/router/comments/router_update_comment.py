@@ -4,7 +4,7 @@ from fastapi import Depends, HTTPException
 from app.utils import AppModel
 
 from app.tweets.service import Service, get_service
-from app.tweets.router import router
+from app.tweets.router.comments import router
 
 
 class UpdateCommentRequest(AppModel):

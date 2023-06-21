@@ -5,7 +5,7 @@ from app.auth.router.dependencies import parse_jwt_user_data
 from app.utils import AppModel
 
 from app.tweets.service import Service, get_service
-from app.tweets.router import router
+from app.tweets.router.tweets import router
 
 
 class UpdateTweetRequest(AppModel):
