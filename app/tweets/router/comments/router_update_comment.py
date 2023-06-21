@@ -11,7 +11,7 @@ class UpdateCommentRequest(AppModel):
     text: str
 
 
-@router.patch("/{id}/comments/{comment_id}")
+@router.patch("/{tweet_id}/comments/{comment_id}")
 def update_comment_text(
         tweet_id: str,
         comment_id: str,

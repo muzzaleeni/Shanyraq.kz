@@ -5,7 +5,7 @@ from app.tweets.service import Service, get_service
 from app.tweets.router.comments import router
 
 
-@router.delete("/{id}/comments/{comment_id}")
+@router.delete("/{tweet_id}/comments/{comment_id}")
 def delete_comment(
     tweet_id: str,
     comment_id: str,

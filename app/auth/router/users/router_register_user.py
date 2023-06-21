@@ -15,7 +15,7 @@ class RegisterUserResponse(BaseModel):
 
 
 @router.post(
-    "/", status_code=status.HTTP_201_CREATED, response_model=RegisterUserResponse
+    "/register", status_code=status.HTTP_201_CREATED, response_model=RegisterUserResponse
 )
 def register_user(
     input: RegisterUserRequest,

@@ -13,7 +13,7 @@ class GetMyTweetsResponse(AppModel):
     tweets: List
 
 
-@router.get("/", response_model=GetMyTweetsResponse)
+@router.get("/me", response_model=GetMyTweetsResponse)
 def get_my_tweets(
         jwt_data: JWTData = Depends(parse_jwt_user_data),
         svc: Service = Depends(get_service),

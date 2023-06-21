@@ -5,7 +5,7 @@ from ..adapters.jwt_service import JWTData
 from ..service import Service, get_service
 from .errors import AuthenticationRequiredException
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/tokens", auto_error=False)
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth", auto_error=False)
 
 
 def parse_jwt_user_data(

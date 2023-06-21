@@ -15,7 +15,7 @@ class CommentResponse(AppModel):
     comment_id: str
 
 
-@router.post("/{id}/comments", response_model=CommentResponse)
+@router.post("/{tweet_id}/comments", response_model=CommentResponse)
 def add_comment_to_tweet(
     tweet_id: str,
     comment_data: CommentRequest,

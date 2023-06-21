@@ -13,7 +13,7 @@ class AuthorizeUserResponse(BaseModel):
     token_type: str = "Bearer"
 
 
-@router.post("/tokens", response_model=AuthorizeUserResponse)
+@router.post("/", response_model=AuthorizeUserResponse)
 def authorize_user(
     input: OAuth2PasswordRequestForm = Depends(),
     svc: Service = Depends(get_service),

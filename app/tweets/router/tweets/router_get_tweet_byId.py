@@ -15,13 +15,13 @@ class GetTweetResponse(BaseModel):
     user_id: str
 
 
-@router.get("/{id}", response_model=GetTweetResponse)
+@router.get("/{tweet_id}", response_model=GetTweetResponse)
 def get_tweet(
-    id: str,
+    tweet_id: str,
     svc: Service = Depends(get_service)
 ) -> GetTweetResponse:
     # Retrieve the tweet from the service or repository
-    tweet = svc.repository.get_tweet_by_tweet_id(id)
+    tweet = svc.repository.get_tweet_by_tweet_id(tweet_id)
 
     if not tweet:
         raise HTTPException(status_code=404, detail="Tweet not found")

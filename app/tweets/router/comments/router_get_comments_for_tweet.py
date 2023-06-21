@@ -13,7 +13,7 @@ class GetTweetCommentsResponse(AppModel):
     comments: List
 
 
-@router.get("/{id}/comments", response_model=GetTweetCommentsResponse)
+@router.get("/{tweet_id}/comments", response_model=GetTweetCommentsResponse)
 def get_tweet_comments(
         tweet_id: str,
         # jwt_data: JWTData = Depends(parse_jwt_user_data),

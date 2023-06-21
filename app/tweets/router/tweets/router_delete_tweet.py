@@ -10,14 +10,14 @@ class DeleteTweetResponse(AppModel):
 
 
 
-@router.delete("/{id}", response_model=DeleteTweetResponse)
+@router.delete("/{tweet_id}", response_model=DeleteTweetResponse)
 def delete_tweet(
-    id: str,
+    tweet_id: str,
     svc: Service = Depends(get_service)
 ) -> DeleteTweetResponse:
 
     # Delete the tweet by the provided ID and user ID
-    deleted = svc.repository.delete_tweet(id)
+    deleted = svc.repository.delete_tweet(tweet_id)
 
     if not deleted:
         raise HTTPException(
