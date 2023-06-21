@@ -43,3 +43,10 @@ class AuthRepository:
             {"_id": ObjectId(user["_id"])},
             {"$set": user}
         )
+
+    def add_tweet_to_favorites(self, user_id: str, tweet_id: str):
+        self.database["users"].update_one(
+            {"_id": user_id},
+            {"$addToSet": {"favorite tweets": tweet_id}},
+            upsert=True
+        )
