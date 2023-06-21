@@ -43,3 +43,18 @@ def get_favorite_tweets(
     favorite_tweets = svc.repository.get_favorite_tweet_ids(user_id)
 
     return GetFavoriteTweetsResponse(favorites=favorite_tweets)
+
+# Deleting favorite tweet
+@router.delete("/favorites/{tweet_id}")
+def remove_from_favorites(
+    tweet_id: str,
+    jwt_data: JWTData = Depends(parse_jwt_user_data),
+    auth_svc: Auth_Service = Depends(auth_get_service),
+):
+    user_id = jwt_data.user_id
+    try:
+        auth_svc.repository.remove_tweet_from_favorites(user_id, tweet_id)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail="Failed to remove tweet from favorites")
+
+    return {"message": "Tweet removed from favorites"}

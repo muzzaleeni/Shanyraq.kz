@@ -59,3 +59,9 @@ class AuthRepository:
             return tweet_ids
         else:
             return []
+
+    def remove_tweet_from_favorites(self, user_id: str, tweet_id: str):
+        self.database["users"].update_one(
+            {"_id": ObjectId(user_id)},
+            {"$pull": {"favorites": tweet_id}}
+        )
