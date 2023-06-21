@@ -20,6 +20,8 @@ class TweetRepository:
             "rooms_count": tweet_data["rooms_count"],
             "description": tweet_data["description"],
             "created_at": datetime.utcnow(),
+            "longitude": tweet_data["longitude"],
+            "latitude": tweet_data["latitude"],
         }
 
         result = self.database["tweets"].insert_one(payload)
