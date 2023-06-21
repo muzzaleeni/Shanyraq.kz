@@ -1,7 +1,7 @@
 from fastapi import Depends, HTTPException
 from app.utils import BaseModel
-from ..service import Service, get_service
-from . import router
+from app.tweets.service import Service, get_service
+from app.tweets.router import router
 
 
 class GetTweetResponse(BaseModel):

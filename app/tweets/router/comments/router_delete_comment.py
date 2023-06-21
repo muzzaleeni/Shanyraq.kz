@@ -1,8 +1,8 @@
 from fastapi import Depends, HTTPException
 # from app.utils import AppModel
 
-from ..service import Service, get_service
-from . import router
+from app.tweets.service import Service, get_service
+from app.tweets.router import router
 
 
 @router.delete("/{id}/comments/{comment_id}")

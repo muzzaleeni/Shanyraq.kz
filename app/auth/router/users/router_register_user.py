@@ -1,8 +1,8 @@
 from fastapi import Depends, HTTPException, status
 from pydantic import BaseModel
 
-from ..service import Service, get_service
-from . import router
+from app.auth.service import Service, get_service
+from app.auth.router.users import router
 
 
 class RegisterUserRequest(BaseModel):
