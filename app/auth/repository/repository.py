@@ -52,4 +52,10 @@ class AuthRepository:
             upsert=True
         )
 
-
+    def get_favorite_tweet_ids(self, user_id: str):
+        user = self.database["users"].find_one({"_id": ObjectId(user_id)})
+        if user and "favorites" in user:
+            tweet_ids = user.get("favorites", [])  # Use .get() to handle missing key gracefully
+            return tweet_ids
+        else:
+            return []

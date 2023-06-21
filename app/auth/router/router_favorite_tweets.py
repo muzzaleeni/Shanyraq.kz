@@ -31,15 +31,15 @@ def add_tweet_to_favorites(
 
 # Getting all favorite tweets
 class GetFavoriteTweetsResponse(AppModel):
-    favorites: List[str]
+    favorites: List
 
 
-@router.get("/favorites/me", response_model=GetFavoriteTweetsResponse)
+@router.get("/favorites", response_model=GetFavoriteTweetsResponse)
 def get_favorite_tweets(
         jwt_data: JWTData = Depends(parse_jwt_user_data),
-        tweet_svc: Tweet_Service = Depends(tweet_get_service),
+        svc: Auth_Service = Depends(auth_get_service),
 ) -> GetFavoriteTweetsResponse:
     user_id = jwt_data.user_id
-    favorite_tweets = tweet_svc.repository.get_favorite_tweets(user_id)
+    favorite_tweets = svc.repository.get_favorite_tweet_ids(user_id)
 
     return GetFavoriteTweetsResponse(favorites=favorite_tweets)

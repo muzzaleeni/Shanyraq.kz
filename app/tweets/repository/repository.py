@@ -29,7 +29,10 @@ class TweetRepository:
         return tweet_id
 
     def get_tweet_by_tweet_id(self, tweet_id: str) -> dict:
-        tweet = self.database["tweets"].find_one({"_id": ObjectId(tweet_id)})
+        if ObjectId.is_valid(tweet_id):
+            tweet = self.database["tweets"].find_one({"_id": ObjectId(tweet_id)})
+        else:
+            tweet = self.database["tweets"].find_one({"_id": tweet_id})
         return tweet
 
     def update_tweet(self, tweet_id: str, updated_data: dict) -> bool:
@@ -103,11 +106,4 @@ class TweetRepository:
         )
         return result.modified_count > 0
 
-    def get_favorite_tweets(self, user_id: str):
-        user = self.database["users"].find_one({"_id": user_id})
-        if user and "favorite tweets" in user:
-            tweet_ids = user["favorite tweets"]
-            favorite_tweets = self.database["tweets"].find({"_id": {"$in": tweet_ids}})
-            return list(favorite_tweets)
-        else:
-            return []
+
