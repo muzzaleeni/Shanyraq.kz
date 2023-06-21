@@ -103,4 +103,11 @@ class TweetRepository:
         )
         return result.modified_count > 0
 
-
+    def get_favorite_tweets(self, user_id: str):
+        user = self.database["users"].find_one({"_id": user_id})
+        if user and "favorite tweets" in user:
+            tweet_ids = user["favorite tweets"]
+            favorite_tweets = self.database["tweets"].find({"_id": {"$in": tweet_ids}})
+            return list(favorite_tweets)
+        else:
+            return []
