@@ -1,11 +1,15 @@
-from fastapi import FastAPI, APIRouter
+from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
 from app.config import client, env, fastapi_config
-from app.utils import import_routers_from_folder
+
+from app.auth.router import router as auth_router
+# from app.auth.router.users import router as auth_users_router
+# from app.auth.router.favorite_tweets import router as auth_favorite_tweets_router
+# from app.tweets.router import router as tweets_router
+
 
 app = FastAPI(**fastapi_config)
-router = APIRouter()
 
 
 @app.on_event("shutdown")
@@ -21,10 +25,9 @@ app.add_middleware(
     allow_credentials=True,
 )
 
-# Import routers from /app/auth/router
-import_routers_from_folder("app.auth.router", router)
-# Import routers from /app/tweets/router
-import_routers_from_folder("app.tweets.router", router)
-
-# Include the router in the FastAPI application
-app.include_router(router)
+# Include the routes from the auth_router
+# app.include_router(auth_users_router, prefix="/auth", tags=["Users"])
+# app.include_router(auth_favorite_tweets_router, prefix="/auth", tags=["Users"])
+app.include_router(auth_router, prefix="/auth", tags=["Users"])
+# Include the routes from the tweets_router
+# app.include_router(tweets_router, prefix="/tweets", tags=["Tweets"])

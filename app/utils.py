@@ -1,7 +1,7 @@
 import importlib
-import os
+import pkgutil
 from datetime import datetime
-from typing import Any, Callable
+from typing import Any, Callable, Optional
 from zoneinfo import ZoneInfo
 
 import orjson
@@ -9,7 +9,7 @@ from bson.objectid import ObjectId
 from pydantic import BaseModel, root_validator
 
 
-def orjson_dumps(v: Any, *, default: Callable[[Any], Any] | None) -> str:
+def orjson_dumps(v: Any, *, default: Optional[Callable[[Any], Any]]) -> str:
     return orjson.dumps(v, default=default).decode()
 
 
@@ -38,13 +38,15 @@ class AppModel(BaseModel):
         return {**data, **datetime_fields}
 
 
-def import_routers_from_folder(folder_path, router):
-    for root, dirs, files in os.walk(folder_path):
-        for file in files:
-            if file.endswith(".py") and file != "__init__.py":
-                module_path = os.path.join(root, file).replace("/", ".")[:-3]
-                try:
-                    router_module = importlib.import_module(module_path)
-                    router.include_router(router_module.router)
-                except Exception as e:
-                    print(f"Failed to import {module_path}, error: {e}")
+def import_routers(package_name):
+    package = importlib.import_module(package_name)
+    prefix = package.__name__ + "."
+
+    for _, module_name, _ in pkgutil.iter_modules(package.__path__, prefix):
+        if not module_name.startswith(prefix + "router_"):
+            continue
+
+        try:
+            importlib.import_module(module_name)
+        except Exception as e:
+            print(f"Failed to import {module_name}, error: {e}")

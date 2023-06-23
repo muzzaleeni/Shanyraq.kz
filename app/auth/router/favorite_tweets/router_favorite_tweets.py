@@ -3,7 +3,7 @@ from app.auth.adapters.jwt_service import JWTData
 from app.auth.router.dependencies import parse_jwt_user_data
 from app.auth.service import Service as Auth_Service, get_service as auth_get_service
 from app.tweets.service import Service as Tweet_Service, get_service as tweet_get_service
-from app.auth.router import router
+from . import router
 from app.utils import AppModel
 from typing import List
 
@@ -44,12 +44,13 @@ def get_favorite_tweets(
 
     return GetFavoriteTweetsResponse(favorites=favorite_tweets)
 
+
 # Deleting favorite tweet
 @router.delete("/favorites/{tweet_id}")
 def remove_from_favorites(
-    tweet_id: str,
-    jwt_data: JWTData = Depends(parse_jwt_user_data),
-    auth_svc: Auth_Service = Depends(auth_get_service),
+        tweet_id: str,
+        jwt_data: JWTData = Depends(parse_jwt_user_data),
+        auth_svc: Auth_Service = Depends(auth_get_service),
 ):
     user_id = jwt_data.user_id
     try:

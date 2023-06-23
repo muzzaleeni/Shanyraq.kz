@@ -7,7 +7,7 @@ from app.auth.adapters.jwt_service import JWTData
 from app.auth.router.dependencies import parse_jwt_user_data
 from app.auth.service import Service, get_service
 from app.auth.utils.security import check_password
-from app.auth.router import router
+from . import router
 from app.auth.router.errors import InvalidCredentialsException
 
 
