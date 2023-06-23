@@ -1,6 +1,6 @@
 from fastapi import APIRouter
-from app.tweets.router.comments import router as comment_router
-from app.tweets.router.tweets import router as tweet_router
+from .comments import router as comment_router
+from .tweets import router as tweet_router
 
 router = APIRouter()
 
